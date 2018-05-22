@@ -54,5 +54,8 @@ router.use(function(req, res, next) {
 
 **3.设置api注释自动生成文档,具体参考[apidoc](https://github.com/apidoc/apidoc)**
 
-
+![这里写图片描述](https://img-blog.csdn.net/20180522111948607?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3EzNTg1OTE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+![这里写图片描述](https://img-blog.csdn.net/2018052211211640?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3EzNTg1OTE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+![这里写图片描述](https://img-blog.csdn.net/20180522112122880?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3EzNTg1OTE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+![这里写图片描述](https://img-blog.csdn.net/20180522112306352?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3EzNTg1OTE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
