@@ -1,6 +1,17 @@
 项目地址为：
 [项目地址](https://github.com/harryluo163/cloud-server)
 
+
+这个是一个RESTful API例子，登录认证采用的是JSON Web Token (JWT)，接口文档采用的是apidoc。
+
+```
+npm install
+npm start
+//生成接口文档
+apidoc -i ./routes/  -o ./public/apidoc
+```
+
+
 这个是自动生成网页，我们就可以摆脱excel。
 **一.首先是使用node安装apiDoc**
 
@@ -71,20 +82,6 @@ npm install apidoc -g
     "forceLanguage": "zh-cn"
   }
 ```
-
-        name：项目名称
-        version：项目版本
-        description：项目介绍
-        title：浏览器显示的标题内容
-        url：endpoints的前缀，例如https://api.github.com/v1
-        sampleUrl：如果设置了，则在api文档中出现一个测试用的from表单
-        header
-        title：导航文字包含header.md文件
-        filename：markdown-file 文件名
-        footer
-        title：导航文字包含header.md文件
-        filename：markdown-file 文件名
-        order：用于配置输出 api-names/group-names 排序，在列表中的将按照列表中的顺序排序，不在列表中的名称将自动显示。
 
 
 **四.使用命令生成项目目录中接口的目录是routes，生成的今天网页我是放在了public/apidoc下**
