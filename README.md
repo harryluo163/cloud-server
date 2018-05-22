@@ -1,5 +1,5 @@
 项目地址为：
-[http://api.songnini.com/apidoc/index.html](http://api.songnini.com/apidoc/index.html)
+[api](http://api.songnini.com/apidoc/index.html)
 
 
 这个是一个RESTful API例子，登录认证采用的是JSON Web Token (JWT)，接口文档采用的是apidoc。
