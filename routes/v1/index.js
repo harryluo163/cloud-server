@@ -16,8 +16,7 @@ router.use(function(req, res, next) {
             return res.json({ success: false, message: '无效的token.' });    
               } else {
                 // 如果验证通过，在req中写入解密结果
-                req.decoded = decoded;  
-                //console.log(decoded)  ;
+                req.decoded = decoded;
                 next(); //继续下一步路由
           }
         });
@@ -28,7 +27,6 @@ router.use(function(req, res, next) {
             message: '没有找到token.' 
         });
       }
-
     }else{
         next();
     }

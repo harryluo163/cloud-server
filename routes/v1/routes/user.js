@@ -36,7 +36,7 @@ exports.login=function (req, res, next) {
     dbhelp.FindOne('users', selectStr, function (result) {
         if (result) {
             if (result.password === user.password) {
-                var data = new Date();
+
                 var authToken = jwt.sign({username: user.username,exp:parseInt(Date.now()/1000)+(60)}, config.session.secrets);
                 res.json({success:1,msg:"登录成功",token: authToken});
             } else {

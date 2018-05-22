@@ -11,83 +11,48 @@ npm start
 apidoc -i ./routes/  -o ./public/apidoc
 ```
 
-
-这个是自动生成网页，我们就可以摆脱excel。
-**一.首先是使用node安装apiDoc**
-
+**1.登录授权返回token，设置有效期**
 ```
-npm install apidoc -g
-```
-
-
-**二.在需要生成接口的添加注释**
-
-```
-/**
- * @api {post} /v1/login 用户登录
- * @apiDescription 用户登录
- * @apiName login
- * @apiGroup User
- * @apiParam {string} username 用户名
- * @apiParam {string} password 密码
- * @apiSuccess  token 返回token
- * @apiSuccessExample {json} Success-Response:
- *  {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhleGlhbmd5dSIsImV4cCI6MT
- * UyNjk3MzYwNSwiaWF0IjoxNTI2MzY4ODA1fQ.mvxQV2v7Wsyd_geZC6WqgZgb8WyUdh8M_G-Rpe6HrP4"}
- * @apiSampleRequest http://localhost:3001/v1/login
- * @apiVersion 1.0.0
- */
-```
+//登录验证成功后，返回给前端
+    var authToken = jwt.sign({username: user.username,exp:parseInt(Date.now()/1000)+(60)}, config.session.secrets);
+     res.json({success:1,msg:"登录成功",token: authToken});
 
 ```
 
-/**
- * @api {post} /v1/user 获取用户信息
- * @apiDescription 获取用户信息
- * @apiName user
- * @apiGroup User
- * @apiParam {string} username 用户名
- * @apiParam {string} age 年龄
- * @apiParam {string} token 签名
- * @apiSuccess  token 返回token
- * @apiSuccessExample {json} Success-Response:
- *  {"token":""}
- * @apiSampleRequest http://localhost:3001/v1/user
- * @apiVersion 1.0.0
- */
-```
-
-**三.项目目录配置创建apidoc.json文件**
-
-```
-{
-    "name": "cloud-server",
-    "version": "1.0.0",
-    "description": "cloud-server项目API文档",
-    "title": "cloud-server API",
-    "url": "http://localhost:3030/v1",
-    "forceLanguage": "zh-cn"
-  }
-```
-或者在package.json文件中加
-
-```
-,
-  "apidoc": {
-    "name": "cloud-server",
-    "version": "1.0.0",
-    "description": "cloud-server项目API文档",
-    "title": "cloud-server API",
-    "url": "http://localhost:3030/v1",
-    "forceLanguage": "zh-cn"
-  }
-```
 
 
-**四.使用命令生成项目目录中接口的目录是routes，生成的今天网页我是放在了public/apidoc下**
+**2.设置目录v1下面采用JWT验证，对每次访问进行解密排除url是login和signup**
 
 ```
-apidoc -i ./routes/  -o ./public/apidoc
+router.use(function(req, res, next) {
+    if (req.originalUrl.indexOf("/login") < 0&&req.originalUrl.indexOf("/signup")<0) {
+    // 拿取token 数据 按照自己传递方式写
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    if (token) {
+        // 解码 token (验证 secret 和检查有效期（exp）)
+        jwt.verify(token, config.session.secrets, function(err, decoded) {
+              if (err) {
+            return res.json({ success: false, message: '无效的token.' });
+              } else {
+                // 如果验证通过，在req中写入解密结果
+                req.decoded = decoded;
+                next(); //继续下一步路由
+          }
+        });
+      } else {
+        // 没有拿到token 返回错误
+        return res.status(403).send({
+            success: false,
+            message: '没有找到token.'
+        });
+      }
+    }else{
+        next();
+    }
+    });
 ```
 
-![这里写图片描述](https://img-blog.csdn.net/20180515173758228?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3EzNTg1OTE0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+**3.设置api注释自动生成文档,具体参考[apidoc](https://github.com/apidoc/apidoc)**
+
+
+
